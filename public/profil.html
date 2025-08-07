@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - AutoParts Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .menu-item { transition: all 0.3s ease; }
+        .menu-item:hover { background-color: rgba(59, 130, 246, 0.05); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Header Moderne -->
+    <header class="glass-effect border-b border-white/20 sticky top-0 z-50">
+        <div class="max-w-md mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-3 text-blue-600 hover:text-blue-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    <span class="font-medium">Retour</span>
+                </a>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Profil</h1>
+                    <p class="text-xs text-gray-600">Compte utilisateur</p>
+                </div>
+                <div class="w-16"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-md mx-auto px-6 py-6 pb-24">
+        <!-- User Info -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 card-hover">
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h2 class="text-xl font-semibold text-gray-900">Utilisateur</h2>
+                    <p class="text-gray-500">utilisateur@example.com</p>
+                    <div class="flex items-center mt-2">
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Actif</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicles Section -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 card-hover">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    Mon véhicule
+                </h3>
+                <button id="addVehicleBtn" class="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Add Vehicle Form -->
+            <div id="addVehicleForm" class="mb-6 p-4 bg-gray-50 rounded-xl hidden">
+                <h4 class="font-medium text-gray-900 mb-4">Ajouter un véhicule</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="text" id="vehicleBrand" placeholder="Marque" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                    <input type="text" id="vehicleModel" placeholder="Modèle" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                    <input type="number" id="vehicleYear" placeholder="Année" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                    <input type="number" id="vehicleMileage" placeholder="Kilométrage" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                </div>
+                <div class="flex space-x-2 mt-4">
+                    <button id="saveVehicleBtn" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all">
+                        Enregistrer
+                    </button>
+                    <button id="cancelVehicleBtn" class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-600 transition-colors">
+                        Annuler
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vehicles List -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl">
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Peugeot 308</h4>
+                        <p class="text-sm text-gray-500">2018 • 85,000 km</p>
+                    </div>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl">
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Renault Clio</h4>
+                        <p class="text-sm text-gray-500">2020 • 45,000 km</p>
+                    </div>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-900 font-medium">Mon véhicule</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">2</span>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-900 font-medium">Commandes</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">3</span>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-900 font-medium">Notifications</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-900 font-medium">Paramètres</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+
+            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-900 font-medium">Historique des commandes</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+
+            <div class="menu-item flex items-center justify-between p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-900 font-medium">Nous contacter</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Language Settings -->
+        <div class="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">Langue</h3>
+            <div class="flex space-x-3">
+                <button id="frenchBtn" class="flex-1 py-3 px-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg">
+                    Français
+                </button>
+                <button id="arabicBtn" class="flex-1 py-3 px-4 rounded-xl font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors">
+                    العربية
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation Moderne -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-200/50">
+        <div class="max-w-md mx-auto px-6">
+            <div class="flex justify-between items-center py-3">
+                <a href="index.html" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Accueil</span>
+                </a>
+                <a href="boutique.html" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Boutique</span>
+                </a>
+                <a href="entretien.html" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Entretien</span>
+                </a>
+                <a href="profil.html" class="flex flex-col items-center p-2 text-blue-600">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Profil</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // JavaScript pour la gestion des véhicules
+        document.getElementById('addVehicleBtn').addEventListener('click', function() {
+            document.getElementById('addVehicleForm').classList.toggle('hidden');
+        });
+
+        document.getElementById('cancelVehicleBtn').addEventListener('click', function() {
+            document.getElementById('addVehicleForm').classList.add('hidden');
+        });
+
+        document.getElementById('saveVehicleBtn').addEventListener('click', function() {
+            // Ici vous pouvez ajouter la logique pour sauvegarder le véhicule
+            alert('Véhicule ajouté avec succès !');
+            document.getElementById('addVehicleForm').classList.add('hidden');
+        });
+
+        // JavaScript pour la gestion des langues
+        document.getElementById('frenchBtn').addEventListener('click', function() {
+            document.getElementById('frenchBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg';
+            document.getElementById('arabicBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors';
+        });
+
+        document.getElementById('arabicBtn').addEventListener('click', function() {
+            document.getElementById('arabicBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg';
+            document.getElementById('frenchBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors';
+        });
+    </script>
+</body>
+</html> 
