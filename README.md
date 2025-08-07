@@ -32,7 +32,7 @@ Un site web moderne pour la gestion de pièces automobiles avec support bilingue
 ### Option 2 : Déploiement manuel
 
 1. **Préparez les fichiers :**
-   ```bash
+```bash
    # Assurez-vous que tous les fichiers sont dans le dossier public
    ls public/
    ```
