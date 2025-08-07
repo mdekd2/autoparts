@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique - AutoParts Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            transition: all 0.3s ease;
+        }
+        
+        /* Support RTL pour l'arabe */
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        [dir="rtl"] .flex {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .pl-12 {
+            padding-left: 0;
+            padding-right: 3rem;
+        }
+        
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+        
+        /* Thème sombre */
+        .dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --card-bg: #1e293b;
+            --gradient-start: #1e293b;
+            --gradient-end: #0f172a;
+        }
+        
+        /* Thème clair */
+        .light {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-primary);
+        }
+        
+        .glass-effect { 
+            backdrop-filter: blur(10px); 
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(51, 65, 85, 0.3);
+        }
+        
+        .card-hover { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .card-hover:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .category-card { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .category-card:hover { 
+            transform: scale(1.05) rotate(1deg); 
+        }
+        
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+        
+        /* Animations d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .animate-slide-in {
+            animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Effet de brillance */
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .shine-effect:hover::before {
+            left: 100%;
+        }
+        
+        /* Effet de particules flottantes */
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Particules flottantes -->
+    <div class="floating-particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 5s;"></div>
+    </div>
+
+    <!-- Header Moderne -->
+    <header class="glass-effect border-b border-white/20 sticky top-0 z-50 animate-fade-in">
+        <div class="max-w-md mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-3 text-white hover:text-blue-300 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    <span class="font-medium">Retour</span>
+                </a>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-white">Boutique</h1>
+                    <p class="text-xs text-blue-100">Pièces automobiles premium</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="languageToggle" class="p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
+                        <span id="currentLang" class="text-sm font-medium">FR</span>
+                    </button>
+                    <button id="themeToggle" class="theme-toggle p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-md mx-auto px-6 py-6 pb-24">
+        <!-- Search Bar Moderne -->
+        <div class="mb-8 animate-fade-in">
+            <div class="relative">
+                <input
+                    type="text"
+                    placeholder="Rechercher des pièces..."
+                    class="w-full px-4 py-4 pl-12 bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl focus:ring-2 focus:ring-white/50 focus:border-transparent shadow-sm text-white placeholder-blue-100 transition-all duration-300"
+                />
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catégories Grid Moderne -->
+        <div class="mb-8 animate-slide-in">
+            <h2 class="text-lg font-semibold text-white mb-4">Catégories</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="category-card bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 cursor-pointer shine-effect">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white mb-4 animate-pulse">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1">Moteur</h3>
+                        <p class="text-xs text-blue-100">Huiles, filtres, pièces moteur</p>
+                    </div>
+                </div>
+
+                <div class="category-card bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 cursor-pointer shine-effect">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white mb-4 animate-pulse">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1">Suspension</h3>
+                        <p class="text-xs text-blue-100">Amortisseurs, ressorts</p>
+                    </div>
+                </div>
+
+                <div class="category-card bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 cursor-pointer shine-effect">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center text-white mb-4 animate-pulse">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1">Électricité</h3>
+                        <p class="text-xs text-blue-100">Batteries, alternateurs</p>
+                    </div>
+                </div>
+
+                <div class="category-card bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 cursor-pointer shine-effect">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center text-white mb-4 animate-pulse">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1">Freins</h3>
+                        <p class="text-xs text-blue-100">Plaquettes, disques, liquide</p>
+                    </div>
+                </div>
+
+                <div class="category-card bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 cursor-pointer shine-effect">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center text-white mb-4 animate-pulse">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1">Transmission</h3>
+                        <p class="text-xs text-blue-100">Boîtes, embrayages</p>
+                    </div>
+                </div>
+
+                <div class="category-card bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 cursor-pointer shine-effect">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center text-white mb-4 animate-pulse">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-white mb-1">Carrosserie</h3>
+                        <p class="text-xs text-blue-100">Pare-chocs, rétroviseurs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produits Populaires -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-white mb-4">Produits Populaires</h2>
+            <div class="space-y-4">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 card-hover shine-effect">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center animate-pulse">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Huile moteur 5W30</h3>
+                            <p class="text-sm text-blue-100 mb-2">Compatible avec plusieurs marques</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-bold text-blue-300">25 MRU</span>
+                                <button class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300">
+                                    Ajouter au panier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 card-hover shine-effect">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center animate-pulse">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Plaquettes de frein avant</h3>
+                            <p class="text-sm text-blue-100 mb-2">Haute performance</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-bold text-blue-300">45 MRU</span>
+                                <button class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300">
+                                    Ajouter au panier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation Moderne -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/10 backdrop-blur-xl border-t border-white/20">
+        <div class="max-w-md mx-auto px-6">
+            <div class="flex justify-between items-center py-3">
+                <a href="index.html" class="flex flex-col items-center p-2 text-white/70 hover:text-white transition-colors">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Accueil</span>
+                </a>
+                <a href="boutique.html" class="flex flex-col items-center p-2 text-white">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Boutique</span>
+                </a>
+                <a href="entretien.html" class="flex flex-col items-center p-2 text-white/70 hover:text-white transition-colors">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Entretien</span>
+                </a>
+                <a href="profil.html" class="flex flex-col items-center p-2 text-white/70 hover:text-white transition-colors">
+                    <div class="w-6 h-6 mb-1">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium">Profil</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Traductions pour la boutique
+        const translations = {
+            fr: {
+                back: "Retour",
+                title: "Boutique",
+                subtitle: "Pièces automobiles premium",
+                searchPlaceholder: "Rechercher des pièces...",
+                categories: "Catégories",
+                engine: "Moteur",
+                engineDesc: "Huiles, filtres, pièces moteur",
+                suspension: "Suspension",
+                suspensionDesc: "Amortisseurs, ressorts",
+                brakes: "Freins",
+                brakesDesc: "Plaquettes, disques, liquide",
+                electrical: "Électrique",
+                electricalDesc: "Batteries, alternateurs, éclairage",
+                transmission: "Transmission",
+                transmissionDesc: "Embrayage, boîte de vitesse",
+                cooling: "Refroidissement",
+                coolingDesc: "Radiateurs, pompes à eau",
+                featuredProducts: "Produits Vedettes",
+                addToCart: "Ajouter au panier",
+                home: "Accueil",
+                shop: "Boutique",
+                maintenance: "Entretien",
+                profile: "Profil"
+            },
+            ar: {
+                back: "رجوع",
+                title: "المتجر",
+                subtitle: "قطع غيار السيارات المميزة",
+                searchPlaceholder: "البحث عن قطع الغيار...",
+                categories: "الفئات",
+                engine: "المحرك",
+                engineDesc: "الزيوت، المرشحات، قطع المحرك",
+                suspension: "التعليق",
+                suspensionDesc: "الممتصات، الينابيع",
+                brakes: "الفرامل",
+                brakesDesc: "الوسادات، الأقراص، السائل",
+                electrical: "الكهرباء",
+                electricalDesc: "البطاريات، المولدات، الإضاءة",
+                transmission: "ناقل الحركة",
+                transmissionDesc: "القابض، علبة التروس",
+                cooling: "التبريد",
+                coolingDesc: "المبردات، مضخات الماء",
+                featuredProducts: "المنتجات المميزة",
+                addToCart: "إضافة إلى السلة",
+                home: "الرئيسية",
+                shop: "المتجر",
+                maintenance: "الصيانة",
+                profile: "الملف الشخصي"
+            }
+        };
+
+        // Système de langue
+        const languageToggle = document.getElementById('languageToggle');
+        const currentLang = document.getElementById('currentLang');
+        let currentLanguage = localStorage.getItem('language') || 'fr';
+        
+        function updateLanguage() {
+            const lang = currentLanguage;
+            const t = translations[lang];
+            
+            // Mettre à jour la direction du texte
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // Mettre à jour les textes du header
+            const backButton = document.querySelector('span.font-medium');
+            if (backButton) backButton.textContent = t.back;
+            
+            const title = document.querySelector('h1.text-xl.font-bold.text-white');
+            if (title) title.textContent = t.title;
+            
+            const subtitle = document.querySelector('p.text-xs.text-blue-100');
+            if (subtitle) subtitle.textContent = t.subtitle;
+            
+            // Mettre à jour la barre de recherche
+            const searchInput = document.querySelector('input[type="text"]');
+            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+            
+            // Mettre à jour les catégories
+            const categoriesTitle = document.querySelector('h2.text-lg.font-semibold.text-white.mb-4');
+            if (categoriesTitle) categoriesTitle.textContent = t.categories;
+            
+            // Mettre à jour les catégories individuelles
+            const categoryTitles = document.querySelectorAll('h3.font-semibold.text-white.mb-1');
+            const categoryDescs = document.querySelectorAll('p.text-xs.text-blue-100');
+            
+            if (categoryTitles[0]) categoryTitles[0].textContent = t.engine;
+            if (categoryDescs[0]) categoryDescs[0].textContent = t.engineDesc;
+            
+            if (categoryTitles[1]) categoryTitles[1].textContent = t.suspension;
+            if (categoryDescs[1]) categoryDescs[1].textContent = t.suspensionDesc;
+            
+            if (categoryTitles[2]) categoryTitles[2].textContent = t.brakes;
+            if (categoryDescs[2]) categoryDescs[2].textContent = t.brakesDesc;
+            
+            if (categoryTitles[3]) categoryTitles[3].textContent = t.electrical;
+            if (categoryDescs[3]) categoryDescs[3].textContent = t.electricalDesc;
+            
+            if (categoryTitles[4]) categoryTitles[4].textContent = t.transmission;
+            if (categoryDescs[4]) categoryDescs[4].textContent = t.transmissionDesc;
+            
+            if (categoryTitles[5]) categoryTitles[5].textContent = t.cooling;
+            if (categoryDescs[5]) categoryDescs[5].textContent = t.coolingDesc;
+            
+            // Mettre à jour les produits vedettes
+            const featuredTitle = document.querySelector('h2.text-lg.font-semibold.text-white.mb-4:last-of-type');
+            if (featuredTitle) featuredTitle.textContent = t.featuredProducts;
+            
+            // Mettre à jour les boutons
+            const addButtons = document.querySelectorAll('button.bg-gradient-to-r');
+            addButtons.forEach(btn => {
+                btn.textContent = t.addToCart;
+            });
+            
+            // Mettre à jour la navigation
+            const navLinks = document.querySelectorAll('nav a span.text-xs.font-medium');
+            if (navLinks[0]) navLinks[0].textContent = t.home;
+            if (navLinks[1]) navLinks[1].textContent = t.shop;
+            if (navLinks[2]) navLinks[2].textContent = t.maintenance;
+            if (navLinks[3]) navLinks[3].textContent = t.profile;
+            
+            // Mettre à jour le bouton de langue
+            currentLang.textContent = lang.toUpperCase();
+            
+            localStorage.setItem('language', lang);
+        }
+        
+        // Initialiser la langue après le chargement du DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguage();
+        });
+        
+        // Basculer la langue
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'fr' ? 'ar' : 'fr';
+            updateLanguage();
+        });
+
+        // Système de thème sombre/clair
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Vérifier le thème sauvegardé
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.className = savedTheme;
+        
+        // Mettre à jour l'icône selon le thème
+        function updateThemeIcon() {
+            const icon = themeToggle.querySelector('svg');
+            if (html.className === 'dark') {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            }
+        }
+        
+        updateThemeIcon();
+        
+        // Basculer le thème
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.className;
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.className = newTheme;
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon();
+            
+            // Animation de transition
+            document.body.style.transition = 'all 0.3s ease';
+        });
+        
+        // Animations au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observer les éléments avec animation
+        document.querySelectorAll('.card-hover, .category-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html> 
