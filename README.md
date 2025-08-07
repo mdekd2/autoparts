@@ -1,4 +1,4 @@
-# AutoParts Pro - Site Web Bilingue
+# EME - Site Web Bilingue
 
 Un site web moderne pour la gestion de pièces automobiles avec support bilingue français/arabe.
 
@@ -77,3 +77,4 @@ Le client pourra tester toutes les fonctionnalités :
 - Navigation entre les pages
 - Animations et effets visuels
 - Logos des marques automobiles
+- Branding EME sur toutes les pages
