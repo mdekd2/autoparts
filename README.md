@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AutoParts Pro - Site Web Bilingue
 
-## Getting Started
+Un site web moderne pour la gestion de pièces automobiles avec support bilingue français/arabe.
 
-First, run the development server:
+## 🌟 Fonctionnalités
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Interface bilingue** : Français et Arabe avec support RTL
+- **Design moderne** : Glassmorphism, animations avancées
+- **Thème sombre/clair** : Système de thème avec transitions fluides
+- **Logos officiels** : Marques automobiles authentiques
+- **Devise MRU** : Support de la devise mauritanienne
+- **Responsive** : Optimisé pour mobile et desktop
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Déploiement sur Netlify
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Option 1 : Déploiement via Git (Recommandé)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Poussez votre code vers GitHub :**
+   ```bash
+   git remote add origin https://github.com/votre-username/auto-parts-website.git
+   git push -u origin master
+   ```
 
-## Learn More
+2. **Connectez-vous à Netlify :**
+   - Allez sur [netlify.com](https://netlify.com)
+   - Cliquez sur "New site from Git"
+   - Choisissez GitHub et votre repository
+   - Configurez les paramètres :
+     - Build command : `(laissez vide)`
+     - Publish directory : `public`
 
-To learn more about Next.js, take a look at the following resources:
+### Option 2 : Déploiement manuel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Préparez les fichiers :**
+   ```bash
+   # Assurez-vous que tous les fichiers sont dans le dossier public
+   ls public/
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Déployez sur Netlify :**
+   - Allez sur [netlify.com](https://netlify.com)
+   - Glissez-déposez le dossier `public` dans la zone de déploiement
+   - Votre site sera immédiatement en ligne !
 
-## Deploy on Vercel
+## 📱 Test sur Mobile
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Une fois déployé, vous pourrez :
+- Tester le site sur votre téléphone
+- Vérifier le support RTL pour l'arabe
+- Tester les animations et transitions
+- Vérifier la responsivité
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Pages Disponibles
+
+- **Accueil** (`index.html`) : Marques populaires et actions rapides
+- **Boutique** (`boutique.html`) : Catégories et produits
+- **Entretien** (`entretien.html`) : Gestion des entretiens
+- **Profil** (`profil.html`) : Gestion du compte
+
+## 🔧 Technologies Utilisées
+
+- HTML5, CSS3, JavaScript
+- Tailwind CSS pour le styling
+- Animations CSS avancées
+- Support RTL pour l'arabe
+- LocalStorage pour les préférences
+
+## 🌐 URL de Déploiement
+
+Votre site sera disponible à : `https://votre-site.netlify.app`
+
+## 📞 Support Client
+
+Le client pourra tester toutes les fonctionnalités :
+- Changement de langue (FR/AR)
+- Thème sombre/clair
+- Navigation entre les pages
+- Animations et effets visuels
+- Logos des marques automobiles
