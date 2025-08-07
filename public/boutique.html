@@ -12,6 +12,46 @@
             transition: all 0.3s ease;
         }
         
+        /* Support RTL pour l'arabe */
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        [dir="rtl"] .flex {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .pl-12 {
+            padding-left: 0;
+            padding-right: 3rem;
+        }
+        
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+        
         /* Thème sombre */
         .dark {
             --bg-primary: #0f172a;
@@ -202,6 +242,9 @@
                     <p class="text-xs text-blue-100">Pièces automobiles premium</p>
                 </div>
                 <div class="flex items-center space-x-2">
+                    <button id="languageToggle" class="p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
+                        <span id="currentLang" class="text-sm font-medium">FR</span>
+                    </button>
                     <button id="themeToggle" class="theme-toggle p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
@@ -400,6 +443,147 @@
     </nav>
 
     <script>
+        // Traductions pour la boutique
+        const translations = {
+            fr: {
+                back: "Retour",
+                title: "Boutique",
+                subtitle: "Pièces automobiles premium",
+                searchPlaceholder: "Rechercher des pièces...",
+                categories: "Catégories",
+                engine: "Moteur",
+                engineDesc: "Huiles, filtres, pièces moteur",
+                suspension: "Suspension",
+                suspensionDesc: "Amortisseurs, ressorts",
+                brakes: "Freins",
+                brakesDesc: "Plaquettes, disques, liquide",
+                electrical: "Électrique",
+                electricalDesc: "Batteries, alternateurs, éclairage",
+                transmission: "Transmission",
+                transmissionDesc: "Embrayage, boîte de vitesse",
+                cooling: "Refroidissement",
+                coolingDesc: "Radiateurs, pompes à eau",
+                featuredProducts: "Produits Vedettes",
+                addToCart: "Ajouter au panier",
+                home: "Accueil",
+                shop: "Boutique",
+                maintenance: "Entretien",
+                profile: "Profil"
+            },
+            ar: {
+                back: "رجوع",
+                title: "المتجر",
+                subtitle: "قطع غيار السيارات المميزة",
+                searchPlaceholder: "البحث عن قطع الغيار...",
+                categories: "الفئات",
+                engine: "المحرك",
+                engineDesc: "الزيوت، المرشحات، قطع المحرك",
+                suspension: "التعليق",
+                suspensionDesc: "الممتصات، الينابيع",
+                brakes: "الفرامل",
+                brakesDesc: "الوسادات، الأقراص، السائل",
+                electrical: "الكهرباء",
+                electricalDesc: "البطاريات، المولدات، الإضاءة",
+                transmission: "ناقل الحركة",
+                transmissionDesc: "القابض، علبة التروس",
+                cooling: "التبريد",
+                coolingDesc: "المبردات، مضخات الماء",
+                featuredProducts: "المنتجات المميزة",
+                addToCart: "إضافة إلى السلة",
+                home: "الرئيسية",
+                shop: "المتجر",
+                maintenance: "الصيانة",
+                profile: "الملف الشخصي"
+            }
+        };
+
+        // Système de langue
+        const languageToggle = document.getElementById('languageToggle');
+        const currentLang = document.getElementById('currentLang');
+        let currentLanguage = localStorage.getItem('language') || 'fr';
+        
+        function updateLanguage() {
+            const lang = currentLanguage;
+            const t = translations[lang];
+            
+            // Mettre à jour la direction du texte
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // Mettre à jour les textes du header
+            const backButton = document.querySelector('span.font-medium');
+            if (backButton) backButton.textContent = t.back;
+            
+            const title = document.querySelector('h1.text-xl.font-bold.text-white');
+            if (title) title.textContent = t.title;
+            
+            const subtitle = document.querySelector('p.text-xs.text-blue-100');
+            if (subtitle) subtitle.textContent = t.subtitle;
+            
+            // Mettre à jour la barre de recherche
+            const searchInput = document.querySelector('input[type="text"]');
+            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+            
+            // Mettre à jour les catégories
+            const categoriesTitle = document.querySelector('h2.text-lg.font-semibold.text-white.mb-4');
+            if (categoriesTitle) categoriesTitle.textContent = t.categories;
+            
+            // Mettre à jour les catégories individuelles
+            const categoryTitles = document.querySelectorAll('h3.font-semibold.text-white.mb-1');
+            const categoryDescs = document.querySelectorAll('p.text-xs.text-blue-100');
+            
+            if (categoryTitles[0]) categoryTitles[0].textContent = t.engine;
+            if (categoryDescs[0]) categoryDescs[0].textContent = t.engineDesc;
+            
+            if (categoryTitles[1]) categoryTitles[1].textContent = t.suspension;
+            if (categoryDescs[1]) categoryDescs[1].textContent = t.suspensionDesc;
+            
+            if (categoryTitles[2]) categoryTitles[2].textContent = t.brakes;
+            if (categoryDescs[2]) categoryDescs[2].textContent = t.brakesDesc;
+            
+            if (categoryTitles[3]) categoryTitles[3].textContent = t.electrical;
+            if (categoryDescs[3]) categoryDescs[3].textContent = t.electricalDesc;
+            
+            if (categoryTitles[4]) categoryTitles[4].textContent = t.transmission;
+            if (categoryDescs[4]) categoryDescs[4].textContent = t.transmissionDesc;
+            
+            if (categoryTitles[5]) categoryTitles[5].textContent = t.cooling;
+            if (categoryDescs[5]) categoryDescs[5].textContent = t.coolingDesc;
+            
+            // Mettre à jour les produits vedettes
+            const featuredTitle = document.querySelector('h2.text-lg.font-semibold.text-white.mb-4:last-of-type');
+            if (featuredTitle) featuredTitle.textContent = t.featuredProducts;
+            
+            // Mettre à jour les boutons
+            const addButtons = document.querySelectorAll('button.bg-gradient-to-r');
+            addButtons.forEach(btn => {
+                btn.textContent = t.addToCart;
+            });
+            
+            // Mettre à jour la navigation
+            const navLinks = document.querySelectorAll('nav a span.text-xs.font-medium');
+            if (navLinks[0]) navLinks[0].textContent = t.home;
+            if (navLinks[1]) navLinks[1].textContent = t.shop;
+            if (navLinks[2]) navLinks[2].textContent = t.maintenance;
+            if (navLinks[3]) navLinks[3].textContent = t.profile;
+            
+            // Mettre à jour le bouton de langue
+            currentLang.textContent = lang.toUpperCase();
+            
+            localStorage.setItem('language', lang);
+        }
+        
+        // Initialiser la langue après le chargement du DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguage();
+        });
+        
+        // Basculer la langue
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'fr' ? 'ar' : 'fr';
+            updateLanguage();
+        });
+
         // Système de thème sombre/clair
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;

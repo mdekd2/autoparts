@@ -12,6 +12,54 @@
             transition: all 0.3s ease;
         }
         
+        /* Support RTL pour l'arabe */
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        [dir="rtl"] .flex {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .pl-12 {
+            padding-left: 0;
+            padding-right: 3rem;
+        }
+        
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+        
+        [dir="rtl"] .translate-x-16 {
+            transform: translateX(-4rem);
+        }
+        
+        [dir="rtl"] .-translate-x-12 {
+            transform: translateX(3rem);
+        }
+        
         /* Thème sombre */
         .dark {
             --bg-primary: #0f172a;
@@ -204,6 +252,9 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
+                    <button id="languageToggle" class="p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
+                        <span id="currentLang" class="text-sm font-medium">FR</span>
+                    </button>
                     <button id="themeToggle" class="theme-toggle p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
@@ -455,6 +506,133 @@
     </nav>
 
     <script>
+        // Traductions
+        const translations = {
+            fr: {
+                title: "AutoParts Pro",
+                subtitle: "Pièces automobiles premium",
+                findParts: "Trouvez vos pièces",
+                partsDescription: "Plus de 50,000 pièces automobiles premium",
+                searchPlaceholder: "Rechercher par marque, modèle...",
+                popularBrands: "Marques Populaires",
+                originalParts: "Pièces originales",
+                myVehicle: "Mon Véhicule",
+                vehicleDescription: "Gérez vos véhicules et leurs informations",
+                addVehicle: "Ajouter un véhicule",
+                maintenance: "Entretien",
+                maintenanceDescription: "Suivez l'historique de vos entretiens",
+                viewHistory: "Voir l'historique",
+                home: "Accueil",
+                shop: "Boutique",
+                profile: "Profil"
+            },
+            ar: {
+                title: "أوتو بارتس برو",
+                subtitle: "قطع غيار السيارات المميزة",
+                findParts: "اعثر على قطع الغيار",
+                partsDescription: "أكثر من 50,000 قطعة غيار سيارات مميزة",
+                searchPlaceholder: "البحث حسب الماركة، الموديل...",
+                popularBrands: "الماركات الشائعة",
+                originalParts: "قطع غيار أصلية",
+                myVehicle: "سيارتي",
+                vehicleDescription: "إدارة سياراتك ومعلوماتها",
+                addVehicle: "إضافة سيارة",
+                maintenance: "الصيانة",
+                maintenanceDescription: "تتبع سجل صيانتك",
+                viewHistory: "عرض السجل",
+                home: "الرئيسية",
+                shop: "المتجر",
+                profile: "الملف الشخصي"
+            }
+        };
+
+        // Système de langue
+        const languageToggle = document.getElementById('languageToggle');
+        const currentLang = document.getElementById('currentLang');
+        let currentLanguage = localStorage.getItem('language') || 'fr';
+        
+        function updateLanguage() {
+            const lang = currentLanguage;
+            const t = translations[lang];
+            
+            // Mettre à jour la direction du texte
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // Mettre à jour les textes avec des sélecteurs plus spécifiques
+            const title = document.querySelector('h1.text-xl.font-bold.text-white');
+            if (title) title.textContent = t.title;
+            
+            const subtitle = document.querySelector('p.text-xs.text-blue-100');
+            if (subtitle) subtitle.textContent = t.subtitle;
+            
+            const findParts = document.querySelector('h2.text-2xl.font-bold.mb-2');
+            if (findParts) findParts.textContent = t.findParts;
+            
+            const partsDesc = document.querySelector('p.text-blue-100.mb-4');
+            if (partsDesc) partsDesc.textContent = t.partsDescription;
+            
+            const searchInput = document.querySelector('input[type="text"]');
+            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+            
+            const popularBrands = document.querySelector('h3.text-lg.font-semibold.text-white.mb-4');
+            if (popularBrands) popularBrands.textContent = t.popularBrands;
+            
+            // Mettre à jour les descriptions des marques
+            document.querySelectorAll('p.text-sm.text-blue-100').forEach(el => {
+                el.textContent = t.originalParts;
+            });
+            
+            // Mettre à jour les actions rapides
+            const actionCards = document.querySelectorAll('.card-hover');
+            if (actionCards[0]) {
+                const vehicleTitle = actionCards[0].querySelector('h3.font-semibold.text-lg.mb-1');
+                if (vehicleTitle) vehicleTitle.textContent = t.myVehicle;
+                
+                const vehicleDesc = actionCards[0].querySelector('p.text-blue-100.text-sm.mb-4');
+                if (vehicleDesc) vehicleDesc.textContent = t.vehicleDescription;
+                
+                const addVehicleBtn = actionCards[0].querySelector('button');
+                if (addVehicleBtn) addVehicleBtn.textContent = t.addVehicle;
+            }
+            
+            if (actionCards[1]) {
+                const maintenanceTitle = actionCards[1].querySelector('h3.font-semibold.text-lg.mb-1');
+                if (maintenanceTitle) maintenanceTitle.textContent = t.maintenance;
+                
+                const maintenanceDesc = actionCards[1].querySelector('p.text-green-100.text-sm.mb-4');
+                if (maintenanceDesc) maintenanceDesc.textContent = t.maintenanceDescription;
+                
+                const viewHistoryBtn = actionCards[1].querySelector('button');
+                if (viewHistoryBtn) viewHistoryBtn.textContent = t.viewHistory;
+            }
+            
+            // Mettre à jour la navigation
+            const navLinks = document.querySelectorAll('nav a span.text-xs.font-medium');
+            if (navLinks[0]) navLinks[0].textContent = t.home;
+            if (navLinks[1]) navLinks[1].textContent = t.shop;
+            if (navLinks[2]) navLinks[2].textContent = t.maintenance;
+            if (navLinks[3]) navLinks[3].textContent = t.profile;
+            
+            // Mettre à jour le bouton de langue
+            currentLang.textContent = lang.toUpperCase();
+            
+            localStorage.setItem('language', lang);
+            
+            console.log('Langue changée vers:', lang);
+        }
+        
+        // Initialiser la langue après le chargement du DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguage();
+        });
+        
+        // Basculer la langue
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'fr' ? 'ar' : 'fr';
+            updateLanguage();
+        });
+
         // Système de thème sombre/clair
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;

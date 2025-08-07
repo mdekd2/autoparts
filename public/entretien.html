@@ -12,6 +12,46 @@
             transition: all 0.3s ease;
         }
         
+        /* Support RTL pour l'arabe */
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        [dir="rtl"] .flex {
+            flex-direction: row-reverse;
+        }
+        
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+        
+        [dir="rtl"] .pl-4 {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+        
+        [dir="rtl"] .pl-12 {
+            padding-left: 0;
+            padding-right: 3rem;
+        }
+        
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+        
         /* Thème sombre */
         .dark {
             --bg-primary: #0f172a;
@@ -202,6 +242,9 @@
                     <p class="text-xs text-blue-100">Historique des entretiens</p>
                 </div>
                 <div class="flex items-center space-x-2">
+                    <button id="languageToggle" class="p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
+                        <span id="currentLang" class="text-sm font-medium">FR</span>
+                    </button>
                     <button id="themeToggle" class="theme-toggle p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
@@ -396,6 +439,156 @@
     </nav>
 
     <script>
+        // Traductions pour l'entretien
+        const translations = {
+            fr: {
+                back: "Retour",
+                title: "Entretien",
+                subtitle: "Historique des entretiens",
+                addMaintenance: "Ajouter un entretien",
+                addMaintenanceTitle: "Ajouter un entretien",
+                maintenanceType: "Type d'entretien",
+                maintenanceTypePlaceholder: "Vidange, freins, etc.",
+                maintenanceDate: "Date d'entretien",
+                mileage: "Kilométrage",
+                mileagePlaceholder: "75000",
+                notes: "Remarques",
+                notesPlaceholder: "Détails de l'entretien...",
+                price: "Prix (MRU)",
+                pricePlaceholder: "0",
+                save: "Enregistrer",
+                cancel: "Annuler",
+                oilChange: "Vidange huile",
+                oilChangeDesc: "Huile moteur 5W30, filtre à huile changé",
+                home: "Accueil",
+                shop: "Boutique",
+                maintenance: "Entretien",
+                profile: "Profil"
+            },
+            ar: {
+                back: "رجوع",
+                title: "الصيانة",
+                subtitle: "سجل الصيانة",
+                addMaintenance: "إضافة صيانة",
+                addMaintenanceTitle: "إضافة صيانة",
+                maintenanceType: "نوع الصيانة",
+                maintenanceTypePlaceholder: "تغيير الزيت، الفرامل، إلخ",
+                maintenanceDate: "تاريخ الصيانة",
+                mileage: "المسافة المقطوعة",
+                mileagePlaceholder: "75000",
+                notes: "ملاحظات",
+                notesPlaceholder: "تفاصيل الصيانة...",
+                price: "السعر (أوقية)",
+                pricePlaceholder: "0",
+                save: "حفظ",
+                cancel: "إلغاء",
+                oilChange: "تغيير الزيت",
+                oilChangeDesc: "زيت المحرك 5W30، تم تغيير فلتر الزيت",
+                home: "الرئيسية",
+                shop: "المتجر",
+                maintenance: "الصيانة",
+                profile: "الملف الشخصي"
+            }
+        };
+
+        // Système de langue
+        const languageToggle = document.getElementById('languageToggle');
+        const currentLang = document.getElementById('currentLang');
+        let currentLanguage = localStorage.getItem('language') || 'fr';
+        
+        function updateLanguage() {
+            const lang = currentLanguage;
+            const t = translations[lang];
+            
+            // Mettre à jour la direction du texte
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // Mettre à jour les textes du header
+            const backButton = document.querySelector('span.font-medium');
+            if (backButton) backButton.textContent = t.back;
+            
+            const title = document.querySelector('h1.text-xl.font-bold.text-white');
+            if (title) title.textContent = t.title;
+            
+            const subtitle = document.querySelector('p.text-xs.text-blue-100');
+            if (subtitle) subtitle.textContent = t.subtitle;
+            
+            // Mettre à jour le bouton d'ajout d'entretien
+            const addMaintenanceBtn = document.getElementById('addMaintenanceBtn');
+            if (addMaintenanceBtn) {
+                const btnText = addMaintenanceBtn.querySelector('svg').nextSibling;
+                if (btnText) btnText.textContent = t.addMaintenance;
+            }
+            
+            // Mettre à jour le formulaire
+            const formTitle = document.querySelector('h3.font-semibold.text-white.mb-6.text-lg');
+            if (formTitle) formTitle.textContent = t.addMaintenanceTitle;
+            
+            const typeLabel = document.querySelector('label:contains("Type d\'entretien")');
+            if (typeLabel) typeLabel.textContent = t.maintenanceType;
+            
+            const typeInput = document.getElementById('maintenanceType');
+            if (typeInput) typeInput.placeholder = t.maintenanceTypePlaceholder;
+            
+            const dateLabel = document.querySelector('label:contains("Date d\'entretien")');
+            if (dateLabel) dateLabel.textContent = t.maintenanceDate;
+            
+            const mileageLabel = document.querySelector('label:contains("Kilométrage")');
+            if (mileageLabel) mileageLabel.textContent = t.mileage;
+            
+            const mileageInput = document.getElementById('maintenanceMileage');
+            if (mileageInput) mileageInput.placeholder = t.mileagePlaceholder;
+            
+            const notesLabel = document.querySelector('label:contains("Remarques")');
+            if (notesLabel) notesLabel.textContent = t.notes;
+            
+            const notesTextarea = document.getElementById('maintenanceNotes');
+            if (notesTextarea) notesTextarea.placeholder = t.notesPlaceholder;
+            
+            const priceLabel = document.querySelector('label:contains("Prix (MRU)")');
+            if (priceLabel) priceLabel.textContent = t.price;
+            
+            const priceInput = document.getElementById('maintenanceCost');
+            if (priceInput) priceInput.placeholder = t.pricePlaceholder;
+            
+            const saveBtn = document.getElementById('saveMaintenanceBtn');
+            if (saveBtn) saveBtn.textContent = t.save;
+            
+            const cancelBtn = document.getElementById('cancelMaintenanceBtn');
+            if (cancelBtn) cancelBtn.textContent = t.cancel;
+            
+            // Mettre à jour les enregistrements existants
+            const maintenanceTitles = document.querySelectorAll('h3.font-semibold.text-white.text-lg');
+            if (maintenanceTitles[0]) maintenanceTitles[0].textContent = t.oilChange;
+            
+            const maintenanceDescs = document.querySelectorAll('p.text-sm.text-blue-100.mb-4');
+            if (maintenanceDescs[0]) maintenanceDescs[0].textContent = t.oilChangeDesc;
+            
+            // Mettre à jour la navigation
+            const navLinks = document.querySelectorAll('nav a span.text-xs.font-medium');
+            if (navLinks[0]) navLinks[0].textContent = t.home;
+            if (navLinks[1]) navLinks[1].textContent = t.shop;
+            if (navLinks[2]) navLinks[2].textContent = t.maintenance;
+            if (navLinks[3]) navLinks[3].textContent = t.profile;
+            
+            // Mettre à jour le bouton de langue
+            currentLang.textContent = lang.toUpperCase();
+            
+            localStorage.setItem('language', lang);
+        }
+        
+        // Initialiser la langue après le chargement du DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLanguage();
+        });
+        
+        // Basculer la langue
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'fr' ? 'ar' : 'fr';
+            updateLanguage();
+        });
+
         // Système de thème sombre/clair
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
