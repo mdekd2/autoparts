@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,31 +7,208 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .menu-item { transition: all 0.3s ease; }
-        .menu-item:hover { background-color: rgba(59, 130, 246, 0.05); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            transition: all 0.3s ease;
+        }
+        
+        /* Thème sombre */
+        .dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --card-bg: #1e293b;
+            --gradient-start: #1e293b;
+            --gradient-end: #0f172a;
+        }
+        
+        /* Thème clair */
+        .light {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-primary);
+        }
+        
+        .glass-effect { 
+            backdrop-filter: blur(10px); 
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(51, 65, 85, 0.3);
+        }
+        
+        .card-hover { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .card-hover:hover { 
+            transform: translateY(-4px) scale(1.01); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .menu-item { 
+            transition: all 0.3s ease; 
+        }
+        .menu-item:hover { 
+            background-color: rgba(59, 130, 246, 0.1); 
+            transform: translateX(5px);
+        }
+        
+        .theme-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+        
+        /* Animations d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .animate-slide-in {
+            animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Effet de brillance */
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .shine-effect:hover::before {
+            left: 100%;
+        }
+        
+        /* Effet de particules flottantes */
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+<body class="min-h-screen">
+    <!-- Particules flottantes -->
+    <div class="floating-particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 5s;"></div>
+    </div>
+
     <!-- Header Moderne -->
-    <header class="glass-effect border-b border-white/20 sticky top-0 z-50">
+    <header class="glass-effect border-b border-white/20 sticky top-0 z-50 animate-fade-in">
         <div class="max-w-md mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center space-x-3 text-blue-600 hover:text-blue-700 transition-colors">
+                <a href="index.html" class="flex items-center space-x-3 text-white hover:text-blue-300 transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                     <span class="font-medium">Retour</span>
                 </a>
                 <div class="text-center">
-                    <h1 class="text-xl font-bold text-gray-900">Profil</h1>
-                    <p class="text-xs text-gray-600">Compte utilisateur</p>
+                    <h1 class="text-xl font-bold text-white">Profil</h1>
+                    <p class="text-xs text-blue-100">Compte utilisateur</p>
                 </div>
-                <div class="w-16"></div>
+                <div class="flex items-center space-x-2">
+                    <button id="themeToggle" class="theme-toggle p-2 text-white hover:text-blue-300 transition-colors rounded-xl hover:bg-white/10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -39,16 +216,16 @@
     <!-- Main Content -->
     <main class="max-w-md mx-auto px-6 py-6 pb-24">
         <!-- User Info -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 card-hover">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 p-6 mb-6 card-hover shine-effect animate-fade-in">
             <div class="flex items-center space-x-4">
-                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center animate-pulse">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
                 </div>
                 <div class="flex-1">
-                    <h2 class="text-xl font-semibold text-gray-900">Utilisateur</h2>
-                    <p class="text-gray-500">utilisateur@example.com</p>
+                    <h2 class="text-xl font-semibold text-white">Utilisateur</h2>
+                    <p class="text-blue-100">utilisateur@example.com</p>
                     <div class="flex items-center mt-2">
                         <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Actif</span>
                     </div>
@@ -57,15 +234,15 @@
         </div>
 
         <!-- Vehicles Section -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 card-hover">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 p-6 mb-6 card-hover animate-slide-in">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h3 class="text-lg font-semibold text-white flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                     Mon véhicule
                 </h3>
-                <button id="addVehicleBtn" class="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors">
+                <button id="addVehicleBtn" class="p-2 text-blue-300 hover:bg-white/10 rounded-xl transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -73,13 +250,13 @@
             </div>
 
             <!-- Add Vehicle Form -->
-            <div id="addVehicleForm" class="mb-6 p-4 bg-gray-50 rounded-xl hidden">
-                <h4 class="font-medium text-gray-900 mb-4">Ajouter un véhicule</h4>
+            <div id="addVehicleForm" class="mb-6 p-4 bg-white/10 rounded-xl hidden">
+                <h4 class="font-medium text-white mb-4">Ajouter un véhicule</h4>
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="text" id="vehicleBrand" placeholder="Marque" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                    <input type="text" id="vehicleModel" placeholder="Modèle" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                    <input type="number" id="vehicleYear" placeholder="Année" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                    <input type="number" id="vehicleMileage" placeholder="Kilométrage" class="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                    <input type="text" id="vehicleBrand" placeholder="Marque" class="px-3 py-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-white/50 focus:border-transparent bg-white/20 text-white placeholder-blue-100 text-sm">
+                    <input type="text" id="vehicleModel" placeholder="Modèle" class="px-3 py-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-white/50 focus:border-transparent bg-white/20 text-white placeholder-blue-100 text-sm">
+                    <input type="number" id="vehicleYear" placeholder="Année" class="px-3 py-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-white/50 focus:border-transparent bg-white/20 text-white placeholder-blue-100 text-sm">
+                    <input type="number" id="vehicleMileage" placeholder="Kilométrage" class="px-3 py-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-white/50 focus:border-transparent bg-white/20 text-white placeholder-blue-100 text-sm">
                 </div>
                 <div class="flex space-x-2 mt-4">
                     <button id="saveVehicleBtn" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all">
@@ -93,22 +270,22 @@
 
             <!-- Vehicles List -->
             <div class="space-y-3">
-                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl">
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-xl shine-effect">
                     <div>
-                        <h4 class="font-semibold text-gray-900">Peugeot 308</h4>
-                        <p class="text-sm text-gray-500">2018 • 85,000 km</p>
+                        <h4 class="font-semibold text-white">Peugeot 308</h4>
+                        <p class="text-sm text-blue-100">2018 • 85,000 km</p>
                     </div>
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </div>
 
-                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl">
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-xl shine-effect">
                     <div>
-                        <h4 class="font-semibold text-gray-900">Renault Clio</h4>
-                        <p class="text-sm text-gray-500">2020 • 45,000 km</p>
+                        <h4 class="font-semibold text-white">Renault Clio</h4>
+                        <p class="text-sm text-blue-100">2020 • 45,000 km</p>
                     </div>
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </div>
@@ -116,56 +293,56 @@
         </div>
 
         <!-- Menu Items -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 overflow-hidden">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-white/10">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <span class="text-gray-900 font-medium">Mon véhicule</span>
+                    <span class="text-white font-medium">Mon véhicule</span>
                 </div>
                 <div class="flex items-center space-x-2">
                     <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">2</span>
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </div>
             </div>
 
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-white/10">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                         </svg>
                     </div>
-                    <span class="text-gray-900 font-medium">Commandes</span>
+                    <span class="text-white font-medium">Commandes</span>
                 </div>
                 <div class="flex items-center space-x-2">
                     <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">3</span>
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </div>
             </div>
 
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-white/10">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                         </svg>
                     </div>
-                    <span class="text-gray-900 font-medium">Notifications</span>
+                    <span class="text-white font-medium">Notifications</span>
                 </div>
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </div>
 
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-white/10">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,23 +350,23 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </div>
-                    <span class="text-gray-900 font-medium">Paramètres</span>
+                    <span class="text-white font-medium">Paramètres</span>
                 </div>
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </div>
 
-            <div class="menu-item flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="menu-item flex items-center justify-between p-4 border-b border-white/10">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                     </div>
-                    <span class="text-gray-900 font-medium">Historique des commandes</span>
+                    <span class="text-white font-medium">Historique des commandes</span>
                 </div>
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </div>
@@ -201,22 +378,22 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <span class="text-gray-900 font-medium">Nous contacter</span>
+                    <span class="text-white font-medium">Nous contacter</span>
                 </div>
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </div>
         </div>
 
         <!-- Language Settings -->
-        <div class="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h3 class="font-semibold text-gray-900 mb-4">Langue</h3>
+        <div class="mt-6 bg-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/20 p-6">
+            <h3 class="font-semibold text-white mb-4">Langue</h3>
             <div class="flex space-x-3">
                 <button id="frenchBtn" class="flex-1 py-3 px-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg">
                     Français
                 </button>
-                <button id="arabicBtn" class="flex-1 py-3 px-4 rounded-xl font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors">
+                <button id="arabicBtn" class="flex-1 py-3 px-4 rounded-xl font-medium bg-white/20 text-white hover:bg-white/30 transition-colors">
                     العربية
                 </button>
             </div>
@@ -224,10 +401,10 @@
     </main>
 
     <!-- Navigation Moderne -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-200/50">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/10 backdrop-blur-xl border-t border-white/20">
         <div class="max-w-md mx-auto px-6">
             <div class="flex justify-between items-center py-3">
-                <a href="index.html" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                <a href="index.html" class="flex flex-col items-center p-2 text-white/70 hover:text-white transition-colors">
                     <div class="w-6 h-6 mb-1">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
@@ -235,7 +412,7 @@
                     </div>
                     <span class="text-xs font-medium">Accueil</span>
                 </a>
-                <a href="boutique.html" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                <a href="boutique.html" class="flex flex-col items-center p-2 text-white/70 hover:text-white transition-colors">
                     <div class="w-6 h-6 mb-1">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
@@ -243,7 +420,7 @@
                     </div>
                     <span class="text-xs font-medium">Boutique</span>
                 </a>
-                <a href="entretien.html" class="flex flex-col items-center p-2 text-gray-600 hover:text-blue-600 transition-colors">
+                <a href="entretien.html" class="flex flex-col items-center p-2 text-white/70 hover:text-white transition-colors">
                     <div class="w-6 h-6 mb-1">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -252,7 +429,7 @@
                     </div>
                     <span class="text-xs font-medium">Entretien</span>
                 </a>
-                <a href="profil.html" class="flex flex-col items-center p-2 text-blue-600">
+                <a href="profil.html" class="flex flex-col items-center p-2 text-white">
                     <div class="w-6 h-6 mb-1">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -265,6 +442,39 @@
     </nav>
 
     <script>
+        // Système de thème sombre/clair
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Vérifier le thème sauvegardé
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.className = savedTheme;
+        
+        // Mettre à jour l'icône selon le thème
+        function updateThemeIcon() {
+            const icon = themeToggle.querySelector('svg');
+            if (html.className === 'dark') {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            }
+        }
+        
+        updateThemeIcon();
+        
+        // Basculer le thème
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.className;
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.className = newTheme;
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon();
+            
+            // Animation de transition
+            document.body.style.transition = 'all 0.3s ease';
+        });
+        
         // JavaScript pour la gestion des véhicules
         document.getElementById('addVehicleBtn').addEventListener('click', function() {
             document.getElementById('addVehicleForm').classList.toggle('hidden');
@@ -283,12 +493,35 @@
         // JavaScript pour la gestion des langues
         document.getElementById('frenchBtn').addEventListener('click', function() {
             document.getElementById('frenchBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg';
-            document.getElementById('arabicBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors';
+            document.getElementById('arabicBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-white/20 text-white hover:bg-white/30 transition-colors';
         });
 
         document.getElementById('arabicBtn').addEventListener('click', function() {
             document.getElementById('arabicBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg';
-            document.getElementById('frenchBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors';
+            document.getElementById('frenchBtn').className = 'flex-1 py-3 px-4 rounded-xl font-medium bg-white/20 text-white hover:bg-white/30 transition-colors';
+        });
+        
+        // Animations au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observer les éléments avec animation
+        document.querySelectorAll('.card-hover, .menu-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
         });
     </script>
 </body>
